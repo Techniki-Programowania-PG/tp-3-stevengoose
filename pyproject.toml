@@ -5,3 +5,6 @@ build-backend = "scikit_build_core.build"
 [project]
 name = "example"
 version = "0.0.1"
+
+[tool.scikit-build]
+build-dir = "build" # Don't use a temporary build directory
