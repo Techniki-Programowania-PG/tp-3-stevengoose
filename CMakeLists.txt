@@ -13,7 +13,9 @@ FetchContent_MakeAvailable(matplotplusplus)
 set(PYBIND11_FINDPYTHON ON)
 find_package(pybind11 CONFIG REQUIRED)
 
-pybind11_add_module(example example.cpp)
-target_link_libraries(example PUBLIC matplot)
+file(GLOB source src/*.cpp)
+file(GLOB headers src/*.h)
+pybind11_add_module(tp3 ${source} ${headers})
+target_link_libraries(tp3 PUBLIC matplot)
 
-install(TARGETS example LIBRARY DESTINATION .)
+install(TARGETS tp3 LIBRARY DESTINATION .)

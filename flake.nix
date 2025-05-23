@@ -16,8 +16,8 @@
       {
         devShell =
           let
-            python = pkgs.python3;
-            pythonPackages = pkgs.python3Packages;
+            python = pkgs.python313;
+            pythonPackages = pkgs.python313Packages;
           in
           with pkgs;
           mkShell {
@@ -25,6 +25,7 @@
               python
               pythonPackages.pybind11
               cmake
+              gnuplot
             ];
             shellHook = ''
               SOURCE_DATE_EPOCH=$(date +%s)
