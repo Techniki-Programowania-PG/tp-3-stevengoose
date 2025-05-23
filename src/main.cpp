@@ -1,3 +1,4 @@
+#include "signal.h"
 #include <matplot/matplot.h>
 #include <pybind11/pybind11.h>
 
