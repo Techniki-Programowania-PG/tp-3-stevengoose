@@ -38,15 +38,51 @@ private:
 
 class cos : public Signal {
 public:
-  cos(double frequency, double t_start, double t_end, size_t num_samples);
+  cos(double frequency, double t_start, double t_end, size_t num_samples)
+      : Signal([&]() -> Signal {
+          std::tuple<std::vector<double>, std::vector<double>> tup =
+              computeSignalArgs(frequency, t_start, t_end, num_samples);
+          std::vector<double> x = std::get<0>(tup);
+          std::vector<double> y = std::get<1>(tup);
+          return Signal(x, y);
+        }()) {};
+
+private:
+  static std::tuple<std::vector<double>, std::vector<double>>
+  computeSignalArgs(double frequency, double t_start, double t_end,
+                    size_t num_samples);
 };
 
 class square : public Signal {
 public:
-  square(double frequency, double t_start, double t_end, size_t num_samples);
+  square(double frequency, double t_start, double t_end, size_t num_samples)
+      : Signal([&]() -> Signal {
+          std::tuple<std::vector<double>, std::vector<double>> tup =
+              computeSignalArgs(frequency, t_start, t_end, num_samples);
+          std::vector<double> x = std::get<0>(tup);
+          std::vector<double> y = std::get<1>(tup);
+          return Signal(x, y);
+        }()) {};
+
+private:
+  static std::tuple<std::vector<double>, std::vector<double>>
+  computeSignalArgs(double frequency, double t_start, double t_end,
+                    size_t num_samples);
 };
 
 class sawtooth : public Signal {
 public:
-  sawtooth(double frequency, double t_start, double t_end, size_t num_samples);
+  sawtooth(double frequency, double t_start, double t_end, size_t num_samples)
+      : Signal([&]() -> Signal {
+          std::tuple<std::vector<double>, std::vector<double>> tup =
+              computeSignalArgs(frequency, t_start, t_end, num_samples);
+          std::vector<double> x = std::get<0>(tup);
+          std::vector<double> y = std::get<1>(tup);
+          return Signal(x, y);
+        }()) {};
+
+private:
+  static std::tuple<std::vector<double>, std::vector<double>>
+  computeSignalArgs(double frequency, double t_start, double t_end,
+                    size_t num_samples);
 };
