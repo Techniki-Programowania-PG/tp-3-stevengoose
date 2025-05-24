@@ -22,8 +22,9 @@ Signal operator*(double &scalar, Signal &in);
 class sin : public Signal {
 public:
   sin(double frequency, double t_start, double t_end, size_t num_samples)
-      : Signal([&, tup = computeSignalArgs(frequency, t_start, t_end,
-                                           num_samples)]() -> Signal {
+      : Signal([&]() -> Signal {
+          std::tuple<std::vector<double>, std::vector<double>> tup =
+              computeSignalArgs(frequency, t_start, t_end, num_samples);
           std::vector<double> x = std::get<0>(tup);
           std::vector<double> y = std::get<1>(tup);
           return Signal(x, y);
