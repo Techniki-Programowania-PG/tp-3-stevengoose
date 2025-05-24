@@ -11,9 +11,7 @@ public:
     SAWTOOTH,
   };
 
-  Signal(Type type, double frequency, double t_start, double t_end,
-         size_t num_samples);
-  Signal(std::vector<double> &x, std::vector<double> &y);
+  Signal(std::vector<double> &x, std::vector<double> &y) : x{x}, y{y} {};
   std::vector<double> x;
   std::vector<double> y;
 };
@@ -24,24 +22,30 @@ Signal operator*(double &scalar, Signal &in);
 class sin : public Signal {
 public:
   sin(double frequency, double t_start, double t_end, size_t num_samples)
-      : Signal(Signal::Type::SIN, frequency, t_start, t_end, num_samples) {};
+      : Signal([&, tup = computeSignalArgs(frequency, t_start, t_end,
+                                           num_samples)]() -> Signal {
+          std::vector<double> x = std::get<0>(tup);
+          std::vector<double> y = std::get<1>(tup);
+          return Signal(x, y);
+        }()) {};
+
+private:
+  static std::tuple<std::vector<double>, std::vector<double>>
+  computeSignalArgs(double frequency, double t_start, double t_end,
+                    size_t num_samples);
 };
 
 class cos : public Signal {
 public:
-  cos(double frequency, double t_start, double t_end, size_t num_samples)
-      : Signal(Signal::Type::COS, frequency, t_start, t_end, num_samples) {};
+  cos(double frequency, double t_start, double t_end, size_t num_samples);
 };
 
 class square : public Signal {
 public:
-  square(double frequency, double t_start, double t_end, size_t num_samples)
-      : Signal(Signal::Type::SQUARE, frequency, t_start, t_end, num_samples) {};
+  square(double frequency, double t_start, double t_end, size_t num_samples);
 };
 
 class sawtooth : public Signal {
 public:
-  sawtooth(double frequency, double t_start, double t_end, size_t num_samples)
-      : Signal(Signal::Type::SAWTOOTH, frequency, t_start, t_end, num_samples) {
-        };
+  sawtooth(double frequency, double t_start, double t_end, size_t num_samples);
 };

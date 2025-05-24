@@ -1,27 +1,6 @@
 #include "signal.h"
+#include <cmath>
 #include <vector>
-
-Signal::Signal(Signal::Type type, double frequency, double t_start,
-               double t_end, size_t num_samples) {
-  switch (type) {
-  case Signal::Type::SIN:
-    x = matplot::linspace(t_start, t_end, num_samples);
-    y = matplot::transform(
-        x, [frequency](auto x) { return std::sin(frequency * x); });
-    break;
-  case Signal::Type::COS:
-    break;
-  case Signal::Type::SQUARE:
-    break;
-  case Signal::Type::SAWTOOTH:
-    break;
-  }
-}
-
-Signal::Signal(std::vector<double> &x, std::vector<double> &y) {
-  x = x;
-  y = y;
-}
 
 Signal operator*(Signal &in, double &scalar) {
   std::vector<double> result(in.x.size());
@@ -31,3 +10,12 @@ Signal operator*(Signal &in, double &scalar) {
 };
 
 Signal operator*(double &scalar, Signal &in) { return in * scalar; };
+
+std::tuple<std::vector<double>, std::vector<double>>
+sin::computeSignalArgs(double frequency, double t_start, double t_end,
+                       size_t num_samples) {
+  std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
+  std::vector<double> y = matplot::transform(
+      x, [frequency](auto x) { return std::sin(frequency * x); });
+  return {x, y};
+};
