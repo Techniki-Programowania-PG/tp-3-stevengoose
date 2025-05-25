@@ -16,8 +16,8 @@
       {
         devShell =
           let
-            python = pkgs.python313;
-            pythonPackages = pkgs.python313Packages;
+            python = pkgs.python312;
+            pythonPackages = pkgs.python312Packages;
           in
           with pkgs;
           mkShell {
