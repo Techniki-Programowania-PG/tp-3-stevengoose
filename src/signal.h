@@ -24,68 +24,20 @@ Signal operator*(double &scalar, Signal &in);
 
 class Sin : public Signal {
 public:
-  Sin(double frequency, double t_start, double t_end, size_t num_samples)
-      : Signal([&]() -> Signal {
-          std::tuple<std::vector<double>, std::vector<double>> tup =
-              computeSignalArgs(frequency, t_start, t_end, num_samples);
-          std::vector<double> x = std::get<0>(tup);
-          std::vector<double> y = std::get<1>(tup);
-          return Signal(x, y);
-        }()) {};
-
-private:
-  static std::tuple<std::vector<double>, std::vector<double>>
-  computeSignalArgs(double frequency, double t_start, double t_end,
-                    size_t num_samples);
+  Sin(double frequency, double t_start, double t_end, size_t num_samples);
 };
 
 class Cos : public Signal {
 public:
-  Cos(double frequency, double t_start, double t_end, size_t num_samples)
-      : Signal([&]() -> Signal {
-          std::tuple<std::vector<double>, std::vector<double>> tup =
-              computeSignalArgs(frequency, t_start, t_end, num_samples);
-          std::vector<double> x = std::get<0>(tup);
-          std::vector<double> y = std::get<1>(tup);
-          return Signal(x, y);
-        }()) {};
-
-private:
-  static std::tuple<std::vector<double>, std::vector<double>>
-  computeSignalArgs(double frequency, double t_start, double t_end,
-                    size_t num_samples);
+  Cos(double frequency, double t_start, double t_end, size_t num_samples);
 };
 
 class Square : public Signal {
 public:
-  Square(double frequency, double t_start, double t_end, size_t num_samples)
-      : Signal([&]() -> Signal {
-          std::tuple<std::vector<double>, std::vector<double>> tup =
-              computeSignalArgs(frequency, t_start, t_end, num_samples);
-          std::vector<double> x = std::get<0>(tup);
-          std::vector<double> y = std::get<1>(tup);
-          return Signal(x, y);
-        }()) {};
-
-private:
-  static std::tuple<std::vector<double>, std::vector<double>>
-  computeSignalArgs(double frequency, double t_start, double t_end,
-                    size_t num_samples);
+  Square(double frequency, double t_start, double t_end, size_t num_samples);
 };
 
 class Sawtooth : public Signal {
 public:
-  Sawtooth(double frequency, double t_start, double t_end, size_t num_samples)
-      : Signal([&]() -> Signal {
-          std::tuple<std::vector<double>, std::vector<double>> tup =
-              computeSignalArgs(frequency, t_start, t_end, num_samples);
-          std::vector<double> x = std::get<0>(tup);
-          std::vector<double> y = std::get<1>(tup);
-          return Signal(x, y);
-        }()) {};
-
-private:
-  static std::tuple<std::vector<double>, std::vector<double>>
-  computeSignalArgs(double frequency, double t_start, double t_end,
-                    size_t num_samples);
+  Sawtooth(double frequency, double t_start, double t_end, size_t num_samples);
 };

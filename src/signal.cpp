@@ -18,45 +18,40 @@ void Signal::show() {
   matplot::show();
 };
 
-// I use them in the lambdas to have them neatly in here,
-// honestly we could move the constructors from header file here and puth all of
-// these inside the lambdas and loose the tuples i was just doing whatever
-// TODO: Move compute functions into constructor lambdas, and move constructor
-// lambdas from header file here
-std::tuple<std::vector<double>, std::vector<double>>
-Sin::computeSignalArgs(double frequency, double t_start, double t_end,
-                       size_t num_samples) {
-  std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
-  std::vector<double> y = matplot::transform(
-      x, [frequency](auto x) { return std::sin(2 * M_PI * frequency * x); });
-  return {x, y};
-};
+Sin::Sin(double frequency, double t_start, double t_end, size_t num_samples)
+    : Signal([&]() -> Signal {
+        std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
+        std::vector<double> y = matplot::transform(x, [frequency](auto x) {
+          return std::sin(2 * M_PI * frequency * x);
+        });
+        return Signal(x, y);
+      }()) {};
 
-std::tuple<std::vector<double>, std::vector<double>>
-Cos::computeSignalArgs(double frequency, double t_start, double t_end,
-                       size_t num_samples) {
-  std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
-  std::vector<double> y = matplot::transform(
-      x, [frequency](auto x) { return std::cos(2 * M_PI * frequency * x); });
-  return {x, y};
-};
+Cos::Cos(double frequency, double t_start, double t_end, size_t num_samples)
+    : Signal([&]() -> Signal {
+        std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
+        std::vector<double> y = matplot::transform(x, [frequency](auto x) {
+          return std::cos(2 * M_PI * frequency * x);
+        });
+        return {x, y};
+      }()) {};
 
-std::tuple<std::vector<double>, std::vector<double>>
-Square::computeSignalArgs(double frequency, double t_start, double t_end,
-                          size_t num_samples) {
-  std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
-  std::vector<double> y = matplot::transform(x, [frequency](auto x) {
-    return std::pow(-1, std::floor(frequency * x));
-  });
-  return {x, y};
-};
+Square::Square(double frequency, double t_start, double t_end,
+               size_t num_samples)
+    : Signal([&]() -> Signal {
+        std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
+        std::vector<double> y = matplot::transform(x, [frequency](auto x) {
+          return std::pow(-1, std::floor(frequency * x));
+        });
+        return {x, y};
+      }()) {};
 
-std::tuple<std::vector<double>, std::vector<double>>
-Sawtooth::computeSignalArgs(double frequency, double t_start, double t_end,
-                            size_t num_samples) {
-  std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
-  std::vector<double> y = matplot::transform(x, [frequency](auto x) {
-    return 2 * ((x / frequency) - std::floor(0.5 + (x / frequency)));
-  });
-  return {x, y};
-};
+Sawtooth::Sawtooth(double frequency, double t_start, double t_end,
+                   size_t num_samples)
+    : Signal([&]() -> Signal {
+        std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
+        std::vector<double> y = matplot::transform(x, [frequency](auto x) {
+          return 2 * ((x / frequency) - std::floor(0.5 + (x / frequency)));
+        });
+        return Signal(x, y);
+      }()) {};
