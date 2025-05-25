@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 project(${SKBUILD_PROJECT_NAME} LANGUAGES CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1) #generates compile_commands.json for clangd to pick up on
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE 1)
 
 # Fetching newest release of matplotplusplus
 include(FetchContent)

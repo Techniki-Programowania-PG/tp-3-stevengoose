@@ -16,8 +16,8 @@
       {
         devShell =
           let
-            python = pkgs.python312;
-            pythonPackages = pkgs.python312Packages;
+            python = pkgs.python313;
+            pythonPackages = pkgs.python313Packages;
           in
           with pkgs;
           mkShell {
@@ -29,18 +29,18 @@
             ];
             shellHook = ''
               SOURCE_DATE_EPOCH=$(date +%s)
-              export CPATH=${python}/include/python3.12:$CPATH
+              export CPATH=${python}/include/python3.13:$CPATH
               VENV=.venv
 
               if test ! -d $VENV; then
-                python3.12 -m venv $VENV
+                python3.13 -m venv $VENV
               fi
               source ./$VENV/bin/activate
               export PYTHONPATH=`pwd`/$VENV/${python.sitePackages}/:$PYTHONPATH
               pip install -r requirements.txt
             '';
             postShellHook = ''
-              ln -sf ${python.sitePackages}/* ./.venv/lib/python3.12/site-packages
+              ln -sf ${python.sitePackages}/* ./.venv/lib/python3.13/site-packages
             '';
           };
       }
