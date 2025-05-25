@@ -12,6 +12,9 @@ public:
   };
 
   Signal(std::vector<double> &x, std::vector<double> &y) : x{x}, y{y} {};
+
+  void show();
+
   std::vector<double> x;
   std::vector<double> y;
 };
@@ -19,9 +22,9 @@ public:
 Signal operator*(Signal &in, double &scalar);
 Signal operator*(double &scalar, Signal &in);
 
-class sin : public Signal {
+class Sin : public Signal {
 public:
-  sin(double frequency, double t_start, double t_end, size_t num_samples)
+  Sin(double frequency, double t_start, double t_end, size_t num_samples)
       : Signal([&]() -> Signal {
           std::tuple<std::vector<double>, std::vector<double>> tup =
               computeSignalArgs(frequency, t_start, t_end, num_samples);
@@ -36,9 +39,9 @@ private:
                     size_t num_samples);
 };
 
-class cos : public Signal {
+class Cos : public Signal {
 public:
-  cos(double frequency, double t_start, double t_end, size_t num_samples)
+  Cos(double frequency, double t_start, double t_end, size_t num_samples)
       : Signal([&]() -> Signal {
           std::tuple<std::vector<double>, std::vector<double>> tup =
               computeSignalArgs(frequency, t_start, t_end, num_samples);
@@ -53,9 +56,9 @@ private:
                     size_t num_samples);
 };
 
-class square : public Signal {
+class Square : public Signal {
 public:
-  square(double frequency, double t_start, double t_end, size_t num_samples)
+  Square(double frequency, double t_start, double t_end, size_t num_samples)
       : Signal([&]() -> Signal {
           std::tuple<std::vector<double>, std::vector<double>> tup =
               computeSignalArgs(frequency, t_start, t_end, num_samples);
@@ -70,9 +73,9 @@ private:
                     size_t num_samples);
 };
 
-class sawtooth : public Signal {
+class Sawtooth : public Signal {
 public:
-  sawtooth(double frequency, double t_start, double t_end, size_t num_samples)
+  Sawtooth(double frequency, double t_start, double t_end, size_t num_samples)
       : Signal([&]() -> Signal {
           std::tuple<std::vector<double>, std::vector<double>> tup =
               computeSignalArgs(frequency, t_start, t_end, num_samples);

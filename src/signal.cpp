@@ -11,13 +11,20 @@ Signal operator*(Signal &in, double &scalar) {
 
 Signal operator*(double &scalar, Signal &in) { return in * scalar; };
 
+void Signal::show() {
+  matplot::plot(x, y);
+  // you can't see the square function without expanding the axis
+  matplot::ylim({-1.1, 1.1});
+  matplot::show();
+};
+
 // I use them in the lambdas to have them neatly in here,
 // honestly we could move the constructors from header file here and puth all of
 // these inside the lambdas and loose the tuples i was just doing whatever
 // TODO: Move compute functions into constructor lambdas, and move constructor
 // lambdas from header file here
 std::tuple<std::vector<double>, std::vector<double>>
-sin::computeSignalArgs(double frequency, double t_start, double t_end,
+Sin::computeSignalArgs(double frequency, double t_start, double t_end,
                        size_t num_samples) {
   std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
   std::vector<double> y = matplot::transform(
@@ -26,7 +33,7 @@ sin::computeSignalArgs(double frequency, double t_start, double t_end,
 };
 
 std::tuple<std::vector<double>, std::vector<double>>
-cos::computeSignalArgs(double frequency, double t_start, double t_end,
+Cos::computeSignalArgs(double frequency, double t_start, double t_end,
                        size_t num_samples) {
   std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
   std::vector<double> y = matplot::transform(
@@ -35,7 +42,7 @@ cos::computeSignalArgs(double frequency, double t_start, double t_end,
 };
 
 std::tuple<std::vector<double>, std::vector<double>>
-square::computeSignalArgs(double frequency, double t_start, double t_end,
+Square::computeSignalArgs(double frequency, double t_start, double t_end,
                           size_t num_samples) {
   std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
   std::vector<double> y = matplot::transform(x, [frequency](auto x) {
@@ -45,7 +52,7 @@ square::computeSignalArgs(double frequency, double t_start, double t_end,
 };
 
 std::tuple<std::vector<double>, std::vector<double>>
-sawtooth::computeSignalArgs(double frequency, double t_start, double t_end,
+Sawtooth::computeSignalArgs(double frequency, double t_start, double t_end,
                             size_t num_samples) {
   std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);
   std::vector<double> y = matplot::transform(x, [frequency](auto x) {
