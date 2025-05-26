@@ -8,7 +8,6 @@ Signal operator*(Signal &in, double &scalar) {
                  [scalar](double v) { return v * scalar; });
   return Signal(in.x, result);
 };
-
 Signal operator*(double &scalar, Signal &in) { return in * scalar; };
 
 void Signal::show() {
