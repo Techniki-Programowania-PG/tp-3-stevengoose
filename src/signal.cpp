@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <cmath>
 #include <vector>
-
+// OPERATORS
 Signal operator*(const Signal &in, const double &scalar) {
   std::vector<double> result(in.x.size());
   std::transform(in.y.begin(), in.y.end(), result.begin(),
@@ -53,6 +53,20 @@ Signal operator-(const Signal &a, const Signal &b) {
   return (-1.0 * b) + a;
 };
 
+Signal &Signal::operator*=(const double &scalar) {
+  *this = *this * scalar;
+  return *this;
+};
+Signal &Signal::operator+=(const Signal &other) {
+  *this = *this + other;
+  return *this;
+};
+Signal &Signal::operator-=(const Signal &other) {
+  *this = *this - other;
+  return *this;
+};
+
+// FUNCTIONS
 void Signal::show() {
   matplot::plot(x, y);
   // you can't see the square function without expanding the axis
@@ -60,6 +74,7 @@ void Signal::show() {
   matplot::show();
 };
 
+// CONSTRUCTORS
 Sin::Sin(double frequency, double t_start, double t_end, size_t num_samples)
     : Signal([&]() -> Signal {
         std::vector<double> x = matplot::linspace(t_start, t_end, num_samples);

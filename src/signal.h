@@ -12,7 +12,13 @@ public:
   };
 
   Signal(std::vector<double> &x, std::vector<double> &y) : x{x}, y{y} {};
+
+  Signal &operator*=(const double &scalar);
+  Signal &operator+=(const Signal &other);
+  Signal &operator-=(const Signal &other);
+
   // Friend allows this function to access private members
+  // const makes it not complain as much + everywhere u look they make it const
   friend Signal operator*(const Signal &signal, double const &scalar);
   friend Signal operator*(const double &scalar, const Signal &in);
   friend Signal operator+(const Signal &a, const Signal &b);
