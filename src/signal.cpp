@@ -35,10 +35,8 @@ Signal operator+(Signal &a, Signal &b) {
   } else if (b.x.back() < t_end) {
     y_b.insert(y_b.end(), (t_end - b.x.back()) * resolution, 0.0);
   };
-  std::vector<double> y;
-  for (unsigned int i = 0; i < y_a.size(); i++) {
-    y.push_back(y_a[i] + y_b[i]);
-  };
+  std::vector<double> y(y_a.size());
+  std::transform(y_a.begin(), y_a.end(), y_b.begin(), y.begin(), std::plus<>());
   return Signal(x, y);
 };
 
