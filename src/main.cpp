@@ -1,5 +1,6 @@
 #include "signal.h"
 #include <matplot/matplot.h>
+#include <pybind11/operators.h>
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;
@@ -14,6 +15,13 @@ PYBIND11_MODULE(tp3, m) {
   m.def("plot", &plot);
   py::class_<Signal>(m, "signal")
       .def(py::init<std::vector<double> &, std::vector<double> &>())
+      .def(py::self + py::self)
+      .def(py::self - py::self)
+      .def(py::self * double())
+      .def(double() * py::self)
+      .def(py::self *= double())
+      .def(py::self += py::self)
+      .def(py::self -= py::self)
       .def("show", &Signal::show);
   py::class_<Sin, Signal>(m, "sinwave")
       .def(py::init<double, double, double, size_t>());

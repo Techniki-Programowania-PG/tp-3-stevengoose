@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cmath>
 #include <vector>
+
 // OPERATORS
 Signal operator*(const Signal &in, const double &scalar) {
   std::vector<double> result(in.x.size());
@@ -70,7 +71,9 @@ Signal &Signal::operator-=(const Signal &other) {
 void Signal::show() {
   matplot::plot(x, y);
   // you can't see the square function without expanding the axis
-  matplot::ylim({-1.1, 1.1});
+  auto temp = std::minmax_element(y.begin(), y.end());
+  double range = std::max(std::abs(*temp.first), std::abs(*temp.second)) + 0.1;
+  matplot::ylim({-range, range});
   matplot::show();
 };
 
