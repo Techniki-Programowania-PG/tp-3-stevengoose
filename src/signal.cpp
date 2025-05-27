@@ -3,15 +3,18 @@
 #include <cmath>
 #include <vector>
 
-Signal operator*(Signal &in, double &scalar) {
+Signal operator*(const Signal &in, const double &scalar) {
   std::vector<double> result(in.x.size());
   std::transform(in.y.begin(), in.y.end(), result.begin(),
                  [scalar](double v) { return v * scalar; });
-  return Signal(in.x, result);
+  std::vector<double> x = in.x;
+  return Signal(x, result);
 };
-Signal operator*(double &scalar, Signal &in) { return in * scalar; };
+Signal operator*(const double &scalar, const Signal &in) {
+  return in * scalar;
+};
 
-Signal operator+(Signal &a, Signal &b) {
+Signal operator+(const Signal &a, const Signal &b) {
   if (a.x.empty() || b.x.empty() ||
       a.x.size() / std::abs(a.x.front() - a.x.back()) !=
           b.x.size() / std::abs(b.x.front() - b.x.back())) {
@@ -40,18 +43,14 @@ Signal operator+(Signal &a, Signal &b) {
   return Signal(x, y);
 };
 
-Signal operator-(Signal &a, Signal &b) {
+Signal operator-(const Signal &a, const Signal &b) {
   if (a.x.empty() || b.x.empty() ||
       a.x.size() / std::abs(a.x.front() - a.x.back()) !=
           b.x.size() / std::abs(b.x.front() - b.x.back())) {
     throw std::invalid_argument(
         "Cannot subtract signals with different amount of samples per second");
   };
-  std::vector<double> c_y(b.y.size());
-  std::transform(b.y.begin(), b.y.end(), c_y.begin(),
-                 [](double v) { return v * (-1); });
-  Signal c(b.x, c_y);
-  return a + c;
+  return (-1.0 * b) + a;
 };
 
 void Signal::show() {
