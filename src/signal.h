@@ -14,6 +14,8 @@ public:
   Signal(std::vector<double> &x, std::vector<double> &y) : x{x}, y{y} {};
   // Friend allows this function to access private members
   friend Signal operator*(Signal &signal, double &scalar);
+  friend Signal operator+(Signal &a, Signal &b);
+  friend Signal operator-(Signal &a, Signal &b);
 
   void show();
 
