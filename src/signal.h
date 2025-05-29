@@ -1,6 +1,9 @@
 #include <cmath>
+#include <complex>
 #include <matplot/matplot.h>
 #include <vector>
+
+class DFT; // forward declaration to be able to return it from Signal
 
 class Signal {
 public:
@@ -24,6 +27,7 @@ public:
   friend Signal operator+(const Signal &a, const Signal &b);
   friend Signal operator-(const Signal &a, const Signal &b);
 
+  DFT dft();
   void show();
 
 private:
@@ -49,4 +53,16 @@ public:
 class Sawtooth : public Signal {
 public:
   Sawtooth(double frequency, double t_start, double t_end, size_t num_samples);
+};
+
+class DFT {
+public:
+  DFT(std::vector<double> &x, std::vector<std::complex<double>> &y)
+      : x{x}, y{y} {};
+  Signal invert();
+  void show_magnitude();
+
+private:
+  std::vector<double> x;
+  std::vector<std::complex<double>> y;
 };

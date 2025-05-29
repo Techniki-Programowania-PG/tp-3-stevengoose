@@ -22,6 +22,7 @@ PYBIND11_MODULE(tp3, m) {
       .def(py::self *= double())
       .def(py::self += py::self)
       .def(py::self -= py::self)
+      .def("dft", &Signal::dft)
       .def("show", &Signal::show);
   py::class_<Sin, Signal>(m, "sinwave")
       .def(py::init<double, double, double, size_t>());
@@ -31,4 +32,8 @@ PYBIND11_MODULE(tp3, m) {
       .def(py::init<double, double, double, size_t>());
   py::class_<Sawtooth, Signal>(m, "sawtoothwave")
       .def(py::init<double, double, double, size_t>());
+  py::class_<DFT>(m, "dft")
+      .def(py::init<std::vector<double> &,
+                    std::vector<std::complex<double>> &>())
+      .def("show_magnitude", &DFT::show_magnitude);
 }

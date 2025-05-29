@@ -1,6 +1,7 @@
 #include "signal.h"
 #include <algorithm>
 #include <cmath>
+#include <complex>
 #include <vector>
 
 // OPERATORS
@@ -76,7 +77,35 @@ void Signal::show() {
   matplot::ylim({-range, range});
   matplot::show();
 };
+DFT Signal::dft() {
+  int N = y.size();
+  std::vector<std::complex<double>> result_y(N);
+  std::vector<double> result_x(N);
+  double dx = std::abs(x[1] - x[0]);
 
+  for (int k = 0; k < N; k++) {
+    std::complex<double> sum(0.0, 0.0);
+    for (int n = 0; n < N; n++) {
+      sum += std::polar(y[n], -2 * M_PI * n * k / N);
+    };
+    result_y[k] = sum;
+    result_x[k] = (k < (N / 2)) ? (k / (dx * N)) : ((k - N) / (dx * N));
+  };
+  return DFT(result_x, result_y);
+}
+void DFT::show_magnitude() {
+  for (int i = 0; i < y.size(); i++)
+    std::cout << y[i] << std::endl;
+  std::vector<double> magnitude(y.size());
+  std::transform(y.begin(), y.end(), magnitude.begin(),
+                 [](std::complex<double> v) { return std::abs(v); });
+  matplot::plot(x, magnitude);
+  // you can't see the square function without expanding the axis
+  double yrange = *std::max_element(magnitude.begin(), magnitude.end()) * 1.1;
+  double xrange = *std::max_element(x.begin(), x.end());
+  matplot::axis({0, xrange, 0, yrange});
+  matplot::show();
+};
 // CONSTRUCTORS
 Sin::Sin(double frequency, double t_start, double t_end, size_t num_samples)
     : Signal([&]() -> Signal {
