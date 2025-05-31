@@ -1,4 +1,5 @@
 #include "signal.h"
+#include "matplot/util/common.h"
 #include <algorithm>
 #include <cmath>
 #include <complex>
@@ -139,6 +140,20 @@ void DFT::show_phase() {
   double xrange = *std::max_element(x.begin(), x.end());
   matplot::axis({0, xrange, 0, yrange});
   matplot::show();
+};
+Signal DFT::invert() {
+  int N = y.size();
+  std::vector<double> result_x(N), result_y(N);
+  double dx = 1 / (x[1] * N);
+  result_x = matplot::linspace(0, dx * N, N);
+  for (int n = 0; n < N; n++) {
+    std::complex<double> sum(0.0, 0.0);
+    for (int k = 0; k < N; k++) {
+      sum += y[k] * std::polar(1.0, 2 * M_PI * k * n / N);
+    };
+    result_y[n] = std::real(sum) / N;
+  };
+  return Signal(result_x, result_y);
 };
 // CONSTRUCTORS
 Sin::Sin(double frequency, double t_start, double t_end, size_t num_samples)
