@@ -7,13 +7,6 @@ class DFT; // forward declaration to be able to return it from Signal
 
 class Signal {
 public:
-  enum Type {
-    SIN,
-    COS,
-    SQUARE,
-    SAWTOOTH,
-  };
-
   Signal(std::vector<double> &x, std::vector<double> &y) : x{x}, y{y} {};
 
   Signal &operator*=(const double &scalar);
