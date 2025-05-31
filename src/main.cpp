@@ -38,5 +38,7 @@ PYBIND11_MODULE(tp3, m) {
                     std::vector<std::complex<double>> &>())
       .def("invert", &DFT::invert)
       .def("show_magnitude", &DFT::show_magnitude)
-      .def("show_phase", &DFT::show_phase);
+      .def("show_phase", &DFT::show_phase)
+      .def("save_magnitude", &DFT::save_magnitude)
+      .def("save_phase", &DFT::save_phase);
 }

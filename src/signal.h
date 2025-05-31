@@ -55,7 +55,9 @@ public:
       : x{x}, y{y} {};
   Signal invert();
   void show_magnitude();
+  void save_magnitude(std::string &filename);
   void show_phase();
+  void save_phase(std::string &filename);
 
 private:
   std::vector<double> x;
