@@ -94,14 +94,23 @@ DFT Signal::dft() {
   return DFT(result_x, result_y);
 }
 void DFT::show_magnitude() {
-  for (int i = 0; i < y.size(); i++)
-    std::cout << y[i] << std::endl;
   std::vector<double> magnitude(y.size());
   std::transform(y.begin(), y.end(), magnitude.begin(),
                  [](std::complex<double> v) { return std::abs(v); });
   matplot::plot(x, magnitude);
   // you can't see the square function without expanding the axis
   double yrange = *std::max_element(magnitude.begin(), magnitude.end()) * 1.1;
+  double xrange = *std::max_element(x.begin(), x.end());
+  matplot::axis({0, xrange, 0, yrange});
+  matplot::show();
+};
+void DFT::show_phase() {
+  std::vector<double> phase(y.size());
+  std::transform(y.begin(), y.end(), phase.begin(),
+                 [](std::complex<double> v) { return std::arg(v); });
+  matplot::plot(x, phase);
+  // you can't see the square function without expanding the axis
+  double yrange = *std::max_element(phase.begin(), phase.end()) * 1.1;
   double xrange = *std::max_element(x.begin(), x.end());
   matplot::axis({0, xrange, 0, yrange});
   matplot::show();

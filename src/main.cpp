@@ -35,5 +35,6 @@ PYBIND11_MODULE(tp3, m) {
   py::class_<DFT>(m, "dft")
       .def(py::init<std::vector<double> &,
                     std::vector<std::complex<double>> &>())
-      .def("show_magnitude", &DFT::show_magnitude);
+      .def("show_magnitude", &DFT::show_magnitude)
+      .def("show_phase", &DFT::show_phase);
 }
