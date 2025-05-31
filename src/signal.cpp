@@ -70,13 +70,38 @@ Signal &Signal::operator-=(const Signal &other) {
 
 // FUNCTIONS
 void Signal::show() {
-  matplot::plot(x, y);
   // you can't see the square function without expanding the axis
   auto temp = std::minmax_element(y.begin(), y.end());
   double range = std::max(std::abs(*temp.first), std::abs(*temp.second)) + 0.1;
+  // Mark all max values on the graph ig
+  std::vector<size_t> max_elements;
+  for (size_t i = 1; i < y.size() - 1; i++) {
+    if (y[i] > y[i - 1] && y[i] > y[i + 1]) {
+      std::cout << i << std::endl;
+      max_elements.push_back(i);
+    };
+  };
+  matplot::plot(x, y, "-o")->marker_color("r").marker_indices(max_elements);
   matplot::ylim({-range, range});
   matplot::show();
 };
+void Signal::save(std::string &filename) {
+  // you can't see the square function without expanding the axis
+  auto temp = std::minmax_element(y.begin(), y.end());
+  double range = std::max(std::abs(*temp.first), std::abs(*temp.second)) + 0.1;
+  // Mark all max values on the graph ig
+  std::vector<size_t> max_elements;
+  for (size_t i = 1; i < y.size() - 1; i++) {
+    if (y[i] > y[i - 1] && y[i] > y[i + 1]) {
+      std::cout << i << std::endl;
+      max_elements.push_back(i);
+    };
+  };
+  matplot::plot(x, y, "-o")->marker_color("r").marker_indices(max_elements);
+  matplot::ylim({-range, range});
+  matplot::save(filename);
+};
+
 DFT Signal::dft() {
   int N = y.size();
   std::vector<std::complex<double>> result_y(N);

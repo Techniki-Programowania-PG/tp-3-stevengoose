@@ -29,6 +29,7 @@ public:
 
   DFT dft();
   void show();
+  void save(std::string &filename);
 
 private:
   std::vector<double> x;

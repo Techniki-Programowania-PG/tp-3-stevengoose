@@ -23,7 +23,8 @@ PYBIND11_MODULE(tp3, m) {
       .def(py::self += py::self)
       .def(py::self -= py::self)
       .def("dft", &Signal::dft)
-      .def("show", &Signal::show);
+      .def("show", &Signal::show)
+      .def("save", &Signal::save);
   py::class_<Sin, Signal>(m, "sinwave")
       .def(py::init<double, double, double, size_t>());
   py::class_<Cos, Signal>(m, "coswave")
